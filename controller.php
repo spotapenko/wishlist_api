@@ -7,13 +7,21 @@ function add_action()
 
     validate_obj_or_return_error($obj);
 
-    $index = $_SESSION['wishlist_max_id'] + 1;
+    $id = $obj->id;
+    foreach ($_SESSION['wishlist'] as $key => $item) {
+        if ($item["id"] == $id) {
+            $data = array(
+                'error_code' => '400',
+                'error_message' => 'ID  is exists',
+            );
+            return response_json(404, $data);
+        }
+    }
 
     $_SESSION['wishlist'][] = array(
-        'id' => $index,
+        'id' => $obj->id,
         'wish_list_item' => $obj,
     );
-    $_SESSION['wishlist_max_id'] = $index;
 
     $data = $_SESSION['wishlist'];
     response_json(200, $data);
@@ -96,7 +104,6 @@ function remove_action()
 function clear_action()
 {
     unset($_SESSION['wishlist']);
-    unset($_SESSION['wishlist_max_id']);
     response_json(200, []);
 }
 

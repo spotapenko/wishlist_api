@@ -1,6 +1,6 @@
 <?php
 
-//session_destroy();
+//session_destroy();//for debug
 
 if (!empty($_GET['session_key'])) {
     session_id($_GET['session_key']);
@@ -9,7 +9,6 @@ session_start();
 
 if (empty($_SESSION['wishlist'])) {
     $_SESSION['wishlist'] = [];
-    $_SESSION['wishlist_max_id'] = 0;
 }
 
 require_once __DIR__ . '/controller.php';
